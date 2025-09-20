@@ -1,0 +1,21 @@
+[package]
+name = "axprobe"
+authors = ["Linfeng Chen <chenlinfeng25@outlook.com>"]
+version = "0.1.0"
+edition = "2024"
+homepage = "https://github.com/Starry-OS/axprobe"
+repository = "https://github.com/Starry-OS/axprobe"
+
+
+[dependencies]
+log = "0.4.21"
+lock_api = "0.4"
+
+
+[target.'cfg(target_arch = "x86_64")'.dependencies]
+yaxpeax-x86 = { version = "2", default-features = false, features = ["fmt"] }
+yaxpeax-arch = { version = "0.3", default-features = false }
+
+
+[dev-dependencies]
+spin = "0.10"
