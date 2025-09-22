@@ -10,8 +10,8 @@ use core::{any::Any, fmt::Debug, sync::atomic::AtomicU64};
 use lock_api::{Mutex, RawMutex};
 
 use crate::{
-    arch_rethook_fixup_return, arch_rethook_prepare, CallBackFunc, Kprobe, KprobeAuxiliaryOps,
-    KprobeBuilder, ProbeData, ProbeHandler, ProbeHandlerFunc, PtRegs,
+    CallBackFunc, Kprobe, KprobeAuxiliaryOps, KprobeBuilder, ProbeData, ProbeHandler,
+    ProbeHandlerFunc, PtRegs, arch_rethook_fixup_return, arch_rethook_prepare,
 };
 
 pub struct Kretprobe<L: RawMutex + 'static, F: KprobeAuxiliaryOps> {

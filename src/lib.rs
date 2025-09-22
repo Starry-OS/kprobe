@@ -58,15 +58,15 @@ fn __register_kprobe<L: RawMutex + 'static, F: KprobeAuxiliaryOps>(
 ) -> Kprobe<L, F> {
     let address = kprobe_builder.probe_addr();
     let existed_point = kprobe_point_list.get(&address).map(Clone::clone);
-    let kprobe = match existed_point {
+    
+    match existed_point {
         Some(existed_point) => kprobe_builder.with_probe_point(existed_point).install().0,
         None => {
             let (kprobe, probe_point) = kprobe_builder.install();
             kprobe_point_list.insert(address, probe_point);
             kprobe
         }
-    };
-    kprobe
+    }
 }
 
 /// Register a kprobe.
@@ -209,7 +209,7 @@ pub fn kprobe_handler_from_debug<L: RawMutex + 'static, F: KprobeAuxiliaryOps>(
         clear_single_step(pt_regs, return_address);
         Some(())
     } else {
-        log::info!("There is no kprobe on pc {:#x}", pc);
+        log::info!("There is no kprobe on pc {pc:#x}");
         None
     }
 }

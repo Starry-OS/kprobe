@@ -9,8 +9,8 @@ use lock_api::RawMutex;
 
 use super::KprobeAuxiliaryOps;
 use crate::{
-    kretprobe::{rethook_trampoline_handler, KretprobeInstance},
     KprobeBasic, KprobeBuilder, KprobeOps,
+    kretprobe::{KretprobeInstance, rethook_trampoline_handler},
 };
 // const BRK_KPROBE_BP: u64 = 10;
 // const BRK_KPROBE_SSTEPBP: u64 = 11;
@@ -71,9 +71,7 @@ impl<F: KprobeAuxiliaryOps> Drop for LA64KprobePoint<F> {
         let layout = Layout::from_size_align(8, 8).unwrap();
         F::dealloc_executable_memory(inst_tmp_ptr as *mut u8, layout);
         log::trace!(
-            "Kprobe::uninstall: address: {:#x}, old_instruction: {:?}",
-            address,
-            inst_32
+            "Kprobe::uninstall: address: {address:#x}, old_instruction: {inst_32:?}"
         );
     }
 }

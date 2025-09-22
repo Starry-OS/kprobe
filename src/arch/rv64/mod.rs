@@ -10,8 +10,8 @@ use lock_api::RawMutex;
 
 use super::KprobeAuxiliaryOps;
 use crate::{
-    kretprobe::{rethook_trampoline_handler, KretprobeInstance},
     KprobeBasic, KprobeBuilder, KprobeOps,
+    kretprobe::{KretprobeInstance, rethook_trampoline_handler},
 };
 
 // const EBREAK_INST: u32 = 0x00100073; // ebreak
@@ -114,11 +114,7 @@ impl<F: KprobeAuxiliaryOps> KprobeBuilder<F> {
         let address = self.symbol_addr + self.offset;
         let inst_16 = unsafe { core::ptr::read(address as *const u16) };
         // See <https://elixir.bootlin.com/linux/v6.10.2/source/arch/riscv/kernel/probes/kprobes.c#L68>
-        let is_inst_16 = if (inst_16 & INSN_LENGTH_MASK) == INSN_LENGTH_32 {
-            false
-        } else {
-            true
-        };
+        let is_inst_16 = (inst_16 & INSN_LENGTH_MASK) != INSN_LENGTH_32;
 
         let inst_tmp_ptr =
             F::alloc_executable_memory(Layout::from_size_align(8, 8).unwrap()) as usize;

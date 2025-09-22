@@ -1,10 +1,10 @@
 [package]
-name = "axprobe"
+name = "kprobe"
 authors = ["Linfeng Chen <chenlinfeng25@outlook.com>"]
 version = "0.1.0"
 edition = "2024"
-homepage = "https://github.com/Starry-OS/axprobe"
-repository = "https://github.com/Starry-OS/axprobe"
+homepage = "https://github.com/Starry-OS/kprobe"
+repository = "https://github.com/Starry-OS/kprobe"
 
 
 [dependencies]
