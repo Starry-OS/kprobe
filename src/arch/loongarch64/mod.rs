@@ -70,9 +70,7 @@ impl<F: KprobeAuxiliaryOps> Drop for LA64KprobePoint<F> {
         // Deallocate the executable memory
         let layout = Layout::from_size_align(8, 8).unwrap();
         F::dealloc_executable_memory(inst_tmp_ptr as *mut u8, layout);
-        log::trace!(
-            "Kprobe::uninstall: address: {address:#x}, old_instruction: {inst_32:?}"
-        );
+        log::trace!("Kprobe::uninstall: address: {address:#x}, old_instruction: {inst_32:?}");
     }
 }
 

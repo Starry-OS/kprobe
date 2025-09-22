@@ -58,7 +58,7 @@ fn __register_kprobe<L: RawMutex + 'static, F: KprobeAuxiliaryOps>(
 ) -> Kprobe<L, F> {
     let address = kprobe_builder.probe_addr();
     let existed_point = kprobe_point_list.get(&address).map(Clone::clone);
-    
+
     match existed_point {
         Some(existed_point) => kprobe_builder.with_probe_point(existed_point).install().0,
         None => {
