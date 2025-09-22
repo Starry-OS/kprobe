@@ -1,4 +1,15 @@
+//! A Rust library for dynamic kernel probing (kprobes and kretprobes).
+//!! This library provides a safe and ergonomic interface for registering and managing kprobes
+//! and kretprobes in a kernel environment.
+//!! It supports multiple architectures, including x86_64, riscv64, and loongarch64.
+//!! # Features
+//! - Register and unregister kprobes and kretprobes.
+//! - Support for pre-handler and post-handler functions.
+//! - Safe management of probe points and handlers.
+//! - Architecture-specific implementations for handling breakpoints and single-stepping.
+
 #![no_std]
+#![deny(missing_docs)]
 #![cfg_attr(target_arch = "riscv64", feature(riscv_ext_intrinsics))]
 extern crate alloc;
 
@@ -14,9 +25,12 @@ pub use kretprobe::*;
 use lock_api::RawMutex;
 pub use manager::*;
 
+/// An enum representing either a kprobe or a kretprobe.
 #[derive(Debug)]
 pub enum Probe<L: RawMutex + 'static, F: KprobeAuxiliaryOps> {
+    /// A kprobe.
     Kprobe(Arc<Kprobe<L, F>>),
+    /// A kretprobe.
     Kretprobe(Arc<Kretprobe<L, F>>),
 }
 
@@ -31,13 +45,14 @@ impl<L: RawMutex + 'static, F: KprobeAuxiliaryOps> Deref for Probe<L, F> {
 }
 
 impl<L: RawMutex + 'static, F: KprobeAuxiliaryOps> Probe<L, F> {
+    /// Get the probe point of the probe.
     pub fn probe_point(&self) -> &Arc<KprobePoint<F>> {
         match self {
             Probe::Kprobe(kprobe) => kprobe.probe_point(),
             Probe::Kretprobe(kretprobe) => kretprobe.kprobe().probe_point(),
         }
     }
-
+    /// Check if the probe is a kretprobe.
     pub fn is_kretprobe(&self) -> bool {
         matches!(self, Probe::Kretprobe(_))
     }

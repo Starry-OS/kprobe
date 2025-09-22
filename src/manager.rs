@@ -18,6 +18,7 @@ impl<L: RawMutex + 'static, F: KprobeAuxiliaryOps> Default for KprobeManager<L, 
 }
 
 impl<L: RawMutex + 'static, F: KprobeAuxiliaryOps> KprobeManager<L, F> {
+    /// Create a new kprobe manager.
     pub const fn new() -> Self {
         KprobeManager {
             break_list: BTreeMap::new(),
