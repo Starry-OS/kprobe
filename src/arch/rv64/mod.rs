@@ -150,9 +150,6 @@ impl<F: KprobeAuxiliaryOps> KprobeBuilder<F> {
                 core::ptr::write((inst_tmp_ptr + 4) as *mut u16, C_EBREAK_INST as _);
             }
         }
-        unsafe {
-            sfence_vma_all();
-        }
         log::trace!(
             "Kprobe::install: address: {:#x}, func_name: {:?}, opcode: {:x?}",
             address,
