@@ -1,0 +1,6 @@
+{
+    // "rust-analyzer.cargo.target": "riscv64gc-unknown-linux-musl",
+    // "rust-analyzer.cargo.target": "aarch64-unknown-linux-musl",
+    // "rust-analyzer.cargo.target": "loongarch64-unknown-linux-musl",
+    "rust-analyzer.cargo.allTargets": false,
+}
